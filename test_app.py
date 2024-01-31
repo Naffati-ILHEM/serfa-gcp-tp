@@ -19,7 +19,7 @@ class AppTestCase(unittest.TestCase):
         res = self.client().get('/')
         self.assertEqual(res.status_code, 200)
         if res.text is not None:
-            self.assertEqual(res.text, "Hello, World!")
+            self.assertEqual(res.text, "Hello, X")
         else:
             self.fail("Response is not expected")
 
