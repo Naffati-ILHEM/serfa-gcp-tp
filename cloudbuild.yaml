@@ -1,0 +1,53 @@
+steps:
+
+  # ! build
+  # installation des dépendances jouée sur cloud build 
+  - name: python #
+    entrypoint: pip
+    args: ["install", "-r", "requirements.txt", "--user"]
+    id: "Install"
+
+    # ! test
+    # TODO
+  - name: python
+    entrypoint: python
+    args: ["-m","pytest"]
+    id: "Test de l'application "
+    # ! deploy
+    # TODO BUILD l'image dockers de l'application 
+    # TODO deloyer cette image en tant que service Cloud 
+     # ! deploy
+  # build l'image Docker de l'application
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/flasksample:$SHORT_SHA",
+        "-f",
+        "prod.Dockerfile",
+        ".",
+      ]
+    id: Build
+  # push de l'image sur Google Artifact Registry
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/flasksample:$SHORT_SHA"
+    id: Push
+    
+    # TODO deployer cette image en tant que service Cloud Run
+# déploiement sur Google Cloud Run
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    args:
+      - run
+      - services
+      - update
+      - serfa-gcp-tp
+      - "--platform=managed"
+      - "--port=5000"
+      - "--image=us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/flasksample:$SHORT_SHA"
+      - "--region=us-west1"
+      - "--quiet"
+    id: Deploy
+    entrypoint: gcloud
