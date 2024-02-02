@@ -10,7 +10,7 @@ on:
 jobs:
 
     # votre prémière étape, que vous pouvez nommer arbitrairement
-    build:
+    build-and-test:
         # on décrit le type de machine sur lequel on veut run une étape
         runs-on: ubuntu-latest
         steps:
@@ -20,21 +20,7 @@ jobs:
             - name: build de l'application
               # `run` avec le caractère `|` permet d'écrire plusieurs commandes à la suite
               run: |
-                echo "BUILD"
-                pip install -r requirements.txt
+                echo "BUILD AND TEST"
+               docker build -t serfagcp:latest .
+                docker run serfagcp:latest bash -c "python -m pytest"
 
-# votre prémière étape, que vous pouvez nommer arbitrairement
-    test:
-      # on décrit le type de machine sur lequel on veut run une étape
-      runs-on: ubuntu-latest
-       # on crée ici avec `needs` une dépdendance d'un job vers un autre
-      needs: build
-      steps:
-          # nom complet de l'action GitHub qui permet de cloner le repo
-          # https://github.com/marketplace?type=actions
-          - uses: actions/checkout@v4
-          - name: test
-            # `run` avec le caractère `|` permet d'écrire plusieurs commandes à la suite
-            run: |
-                echo "TEST"
-                python -m pytest
