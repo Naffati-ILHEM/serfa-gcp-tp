@@ -25,6 +25,7 @@ RUN pip install -r requirements.txt
 
 # on va copier le code de l'applicatreion
 COPY ./app.py .
+ENV FLASK_ENV=production
 
 # on met en place les variables d'environnement pour le debug
 ENV FLASK_ENV=development
