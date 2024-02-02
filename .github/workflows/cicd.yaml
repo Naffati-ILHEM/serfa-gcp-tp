@@ -44,5 +44,5 @@ jobs:
             context: .
             push: true
             tags: |
-             us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/serfagcp:latest
+              us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/serfagcp:latest
       
