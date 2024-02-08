@@ -68,7 +68,8 @@ jobs:
           with:
             service: 'serfa-gcp-tp'
             image: 'us-west1-docker.pkg.dev/impactful-shard-412809/serfa-gcp-tp/serfagcp:latest'
-            region: 'us-west1'
+            region: 'europe-west1'
+            flags: "--port=5000"
 
 
         # ce dernier step permet de lire les logs de l'action précédente
