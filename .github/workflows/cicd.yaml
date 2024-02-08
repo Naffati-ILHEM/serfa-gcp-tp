@@ -35,7 +35,7 @@ jobs:
         - name: se login au Google Artifact Registry
           uses: docker/login-action@v3
           with:
-            registry: europe-west1-docker.pkg.dev
+            registry: us-west1-docker.pkg.dev
             username: _json_key
             password: ${{ secrets.CLOUD_RUN_DEPLOYER_SA_KEY }}
         - id: docker-push-tagged
